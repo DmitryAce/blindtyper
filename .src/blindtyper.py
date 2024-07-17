@@ -96,28 +96,21 @@ def load_strings_from_file(file_name):
 
 
 def get_keyboard_layout():
-    # Определение системы
     if os.name == 'nt':
+        import ctypes
         user32 = ctypes.WinDLL('user32')
         layout = user32.GetKeyboardLayout(0)
-        # Код языка - это младшие 16 битов результата
         language_id = layout & (2 ** 16 - 1)
         if language_id == 0x419:
             return "ru"
         else:
             return "en"
     elif os.name == 'posix':
-        try:
-            # Использование команды setxkbmap для получения текущей раскладки клавиатуры
-            layout = subprocess.check_output(['setxkbmap', '-query'], encoding='utf-8')
-            layout_line = [line for line in layout.split('\n') if 'layout:' in line]
-            if layout_line:
-                current_layout = layout_line[0].split()[1]
-                return current_layout
-            else:
-                return "unknown"
-        except subprocess.CalledProcessError:
-            return "unknown"
+        return "??"
+
+
+print(get_keyboard_layout())
+
 
 def main():
     running = True
