@@ -1,0 +1,37 @@
+{
+    "MIN_LEN": 3,
+    "MAX_LEN": 10,
+    "FILENAME": "csharp_keywords.txt",
+    "SHOW_LAYOUT": true,
+    "SHOW_UNDERLINE": true,
+    "SHOW_TAB": true,
+    "FONTNAME": "Montserrat-Bold.ttf",
+    "FONTSIZE": 32,
+    "COLORS": {
+        "GRAY": [
+            101,
+            101,
+            102
+        ],
+        "WHITE": [
+            230,
+            232,
+            235
+        ],
+        "RED": [
+            162,
+            47,
+            102
+        ],
+        "PURPLE": [
+            188,
+            152,
+            234
+        ],
+        "BACKGROUND_COLOR": [
+            36,
+            37,
+            38
+        ]
+    }
+}

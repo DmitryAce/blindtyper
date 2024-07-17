@@ -1,0 +1,56 @@
+dp[i, j] = dp[i - 1, j] + matrix[i, j];
+path[i, j] = path[i - 1, j] + " -> " + matrix[i, j];
+static void Main()
+byte n = 10;
+byte m = 15;
+int[,] matrix = new int[n, m];
+Random random = new Random();
+for (int i = 0; i < n; i++)
+for (int j = 0; j < m; j++)
+matrix[i, j] = random.Next(1, 101); 
+printMatrix(matrix, n, m);
+var result = FindMaxSumPath(matrix);
+Console.WriteLine($"Максимальная сумма: {result.Item1}");
+Console.WriteLine($"Путь: {result.Item2}");
+Console.WriteLine()
+class Program
+public static void Main(string[] args)
+var descriptions = new int[][]
+new int[] {20, 15, 1},
+new int[] {20, 17, 0},
+new int[] {50, 20, 1},
+new int[] {50, 80, 0},
+new int[] {80, 19, 1}
+TreeNode root = CreateBinaryTree([[20, 15, 1], [20, 17, 0], [50, 20, 1], [50, 80, 0], [80, 19, 1]]);
+Console.WriteLine(root.val);
+public static TreeNode CreateBinaryTree(int[][] descriptions)
+HashSet<int> parents = new HashSet<int>();
+HashSet<int> children = new HashSet<int>();
+Dictionary<int, List<(int, bool)>> parentsToChildren = new Dictionary<int, List<(int, bool)>>();
+for (int i = 0; i < descriptions.Length; i++)
+int parent = descriptions[i][0];
+int child = descriptions[i][1];
+bool isLeft = descriptions[i][2] == 1;
+parents.Add(parent);
+children.Add(child);
+if (!parentsToChildren.ContainsKey(parent))
+parentsToChildren[parent] = new List<(int, bool)>();
+parentsToChildren[parent].Add((child, isLeft));
+parents.ExceptWith(children);
+TreeNode root = Dfs(parentsToChildren, parents.ToArray()[0]);
+return root;
+public static TreeNode Dfs(Dictionary<int, List<(int, bool)>> parentsToChildren, int node)
+TreeNode Node = new TreeNode(node);
+if (parentsToChildren.ContainsKey(node))
+foreach (var val in parentsToChildren[node])
+if (val.Item2) Node.left = Dfs(parentsToChildren, val.Item1);
+else Node.right = Dfs(parentsToChildren, val.Item1);
+return Node;
+public class TreeNode
+public int val;
+public TreeNode left;
+public TreeNode right;
+public TreeNode(int val = 0, TreeNode left = null, TreeNode right = null)
+this.val = val;
+this.left = left;
+this.right = right;
